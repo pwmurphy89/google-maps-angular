@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="mapApp">
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Info windows</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script type="text/javascript" src="controller.js"></script>
+     <script type="text/javascript" src="cities.js"></script>
+     <link rel="stylesheet" type="text/css" href="css/style.css">
+     <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCa4bcc6OqketdaLk6Dsxb6ynqfHrHlzLg">
+    </script>
+
+    http://maps.googleapis.com/maps/api/directions/output?parameters
+
+  </head>
+  <body ng-controller="myController">
+    <div id="map"></div>
+
+    <div id="map-panel">
+      <ol>
+        <li ng-repeat="city in cities">
+         <div class="city-name">{{city.city}}</div>
+          <button>
+            <a href="" ng-click="cityClick($index)" class="blue-button">Show Info</a>
+          </button>
+       </li>
+     </ol>
+   </div>
+   <div id="right-panel"></div>
+  </body>
+</html>
