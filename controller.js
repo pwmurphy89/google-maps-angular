@@ -22,45 +22,45 @@ mapApp.controller("myController",function($scope) {
         	var long = Number(latLon[1]);
         
 
-    var marker = new google.maps.Marker({
-          position: {lat: lat, lng: long},
-          map: $scope.map,
-          title: city.city
-        });
+          var marker = new google.maps.Marker({
+            position: {lat: lat, lng: long},
+            map: $scope.map,
+            title: city.city
+          });
 
- var contentString = '<div id="content">'+ '<h1>' + city.city + '</h1>' +
-       '<div id="siteNotice">'+
-       '<div id="pop">' + 'Total Population: ' + city.yearEstimate + '</div>' +
-       '<div id="census">' + '2010 Census: ' + city.lastCensus + '</div>' +
-       '<div id="change">' + 'Population Change: ' + city.change + '</div>' +
-       '<div id="density">' + 'Population density: ' + city.lastPopDensity + '</div>' +
-       '<div id="state">' + 'State: ' + city.state + '</div>' +
-       '<div id="land">' + 'Land Area: ' +city.landArea + '</div>' +
-       '<div id="directions"><button onclick="initMap();" class="directions">Get Directions' +
+          var contentString = '<div id="content">'+ '<h1>' + city.city + '</h1>' +
+          '<div id="siteNotice">'+
+          '<div id="pop">' + 'Total Population: ' + city.yearEstimate + '</div>' +
+          '<div id="census">' + '2010 Census: ' + city.lastCensus + '</div>' +
+          '<div id="change">' + 'Population Change: ' + city.change + '</div>' +
+          '<div id="density">' + 'Population density: ' + city.lastPopDensity + '</div>' +
+          '<div id="state">' + 'State: ' + city.state + '</div>' +
+          '<div id="land">' + 'Land Area: ' +city.landArea + '</div>' +
+          '<div id="directions"><button onclick="initMap(\''+ city.city +'\');" class="directions">Get Directions' +
           '</button></div>' +
-           '</div>'+
-           '</div>';
+          '</div>'+
+          '</div>';
 
-     infowindow = new google.maps.InfoWindow({
-    content: contentString
-  });
+          infowindow = new google.maps.InfoWindow({
+            content: contentString
+          });
 
-    marker.content = "Content";
-    marker.addListener('click', function() {
+          // marker.content = "Content";
+          marker.addListener('click', function() {
 
-          $scope.map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 8,
-      center: new google.maps.LatLng(lat, long)
-    });
+            $scope.map = new google.maps.Map(document.getElementById("map"), {
+              zoom: 8,
+              center: new google.maps.LatLng(lat, long)
+            });
 
 
-        infowindow.setContent(contentString);
-          infowindow.open($scope.map, marker);
-        });
-    $scope.markers.push(marker);
-      
+            infowindow.setContent(contentString);
+            infowindow.open($scope.map, marker);
+          });
+          $scope.markers.push(marker);
 
-      }
+
+         }
 
       $scope.cityClick = function(i) {
 
@@ -86,7 +86,8 @@ mapApp.controller("myController",function($scope) {
   
   
 
-   initMap = function() {
+   initMap = function(city) {
+
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
     center: {lat: 40, lng: -98}  // Australia.
@@ -103,7 +104,7 @@ mapApp.controller("myController",function($scope) {
     // computeTotalDistance(directionsDisplay.getDirections());
   });
 
-  displayRoute('Atlanta', 'Chicago', directionsService,
+  displayRoute('Atlanta', city, directionsService,
       directionsDisplay);
 }
 
