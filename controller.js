@@ -1,5 +1,8 @@
+
 var mapApp = angular.module("mapApp",[]);
-mapApp.controller("myController",function($scope) {
+mapApp.controller("myController",function($scope,$http) {
+
+
 
 
   $scope.markers = [];
@@ -14,9 +17,13 @@ mapApp.controller("myController",function($scope) {
 
  
 
+      //  All of these are ways create new variables & scope variables that are functions
+      // var createMarker = function(city){}
+      // var createMarker = (city)=> {}
+      // $scope.createMarker = function(city){}
+      // $scope.methodCall = (city)=> {}
 
-
-        function createMarker (city){
+      function createMarker (city){
         	var latLon = city.latLon.split(",");
         	var lat = Number(latLon[0]);
         	var long = Number(latLon[1]);
@@ -28,6 +35,28 @@ mapApp.controller("myController",function($scope) {
             title: city.city
           });
 
+          // Add weather info
+
+            var apiKey = '&appid=d450908ff6741f873ecc6fdd489f1969';
+         
+            var currTemp;
+            var weatherURL = 'http://api.openweathermap.org/data/2.5/weather?q=' +city.city+'&units=imperial'+apiKey;  
+
+              $http.get(weatherURL).success(function(weatherData){
+
+                  currTemp = weatherData.main.temp;
+                  console.log(currTemp);
+
+
+
+
+              
+
+
+          /////////////////////////////////////////////
+
+
+
           var contentString = '<div id="content">'+ '<h1>' + city.city + '</h1>' +
           '<div id="siteNotice">'+
           '<div id="pop">' + 'Total Population: ' + city.yearEstimate + '</div>' +
@@ -38,6 +67,7 @@ mapApp.controller("myController",function($scope) {
           '<div id="land">' + 'Land Area: ' +city.landArea + '</div>' +
           '<div id="directions"><button onclick="initMap(\''+ city.city +'\');" class="directions">Get Directions' +
           '</button></div>' +
+          '<div id="weather">' +currTemp +'</div>' + 
           '</div>'+
           '</div>';
 
@@ -59,8 +89,10 @@ mapApp.controller("myController",function($scope) {
           });
           $scope.markers.push(marker);
 
+        });
 
-         }
+
+      }
 
       $scope.cityClick = function(i) {
 
